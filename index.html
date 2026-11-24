@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClipDock – Clipboard history that pastes where your cursor is</title>
+<meta name="description" content="ClipDock keeps everything you copy and pastes it with one click, right where your cursor is. Free for Windows. No sign-up.">
+<meta name="theme-color" content="#0b0c10">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%234f8cff'/%3E%3Crect x='17' y='14' width='30' height='38' rx='5' fill='white'/%3E%3Crect x='25' y='9' width='14' height='10' rx='3' fill='%23283452'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid"></div></div>
+<div class="glow" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="ClipDock home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c9cff"/><stop offset="1" stop-color="#2458dc"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#lg)"/><rect x="17" y="14" width="30" height="38" rx="5" fill="#fff"/><rect x="25" y="9" width="14" height="10" rx="3" fill="#283452"/><rect x="22" y="26" width="20" height="3" rx="1.5" fill="#c4cde0"/><rect x="22" y="33" width="20" height="3" rx="1.5" fill="#c4cde0"/><rect x="22" y="40" width="12" height="4" rx="2" fill="#4f8cff"/></svg>
+      ClipDock
+    </a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#changelog">What's new</a>
+      <a href="#faq">Help</a>
+      <a class="pill-btn" data-download href="downloads/ClipDock-latest.zip">Download</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <div class="wrap hero">
+    <div>
+      <span class="badge"><i class="dot"></i> Version <b>v<span class="ver">1.0.0</span></b> is out · Free for Windows</span>
+      <h1>Your clipboard,<br><span class="grad">with a memory.</span></h1>
+      <p class="lead">ClipDock remembers everything you copy and sits just above your taskbar. Click any item and it lands <b>exactly where your cursor is</b>. No sign-up, no fuss.</p>
+      <div class="cta">
+        <a class="btn btn-primary" data-download href="downloads/ClipDock-latest.zip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <div class="meta">
+        <span>Version <b>v<span class="ver">1.0.0</span></b></span>
+        <span class="size">small download</span>
+        <span>Windows 10 &amp; 11</span>
+        <span>Released <b class="released"></b></span>
+      </div>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="notepad glass">
+        <div class="np-bar"><i></i><i></i><i></i><span>Notes.txt</span></div>
+        <div class="np-body"><span id="typed"></span><span class="caret"></span></div>
+      </div>
+      <div class="dock glass">
+        <div class="dk-head"><b>⎘ ClipDock</b><em>v<span class="ver">1.0.0</span> · 4 items</em></div>
+        <div class="dk-tabs"><span class="on">History</span><span>Pinned (1)</span></div>
+        <div class="dk-card" data-t="Invoice #4821 is due on 30 Nov">Invoice #4821 is due on 30 Nov<small>just now · 31 chars</small></div>
+        <div class="dk-card" data-t="hello@yourcompany.com">hello@yourcompany.com<small>2 min ago · 21 chars</small></div>
+        <div class="dk-card" data-t="https://meet.example.com/standup">https://meet.example.com/standup<small>5 min ago · 32 chars</small></div>
+        <div class="dk-card" data-t="Thanks! I'll send it over today.">Thanks! I'll send it over today.<small>9 min ago · 32 chars</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FEATURES ================= -->
+  <section id="features">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow">Features</span>
+        <h2>Small app. Big time saver.</h2>
+        <p class="sub">Everything you copy stays one click away, without ever getting in your way.</p>
+      </div>
+      <div class="features">
+        <div class="feat reveal"><div class="ico">🖱️</div><h3>Click to paste</h3><p>Click any copied item and it pastes right at your cursor, in whichever app you were using.</p></div>
+        <div class="feat reveal"><div class="ico">📌</div><h3>Docked above the taskbar</h3><p>Always on top, always in reach. Drag it anywhere, or collapse it to a slim bar.</p></div>
+        <div class="feat reveal"><div class="ico">🎯</div><h3>Never steals focus</h3><p>Your text cursor stays exactly where you left it while you click around ClipDock.</p></div>
+        <div class="feat reveal"><div class="ico">🔍</div><h3>Search your history</h3><p>Copied something an hour ago? Type a few letters and find it instantly.</p></div>
+        <div class="feat reveal"><div class="ico">⭐</div><h3>Pin your favourites</h3><p>Star the snippets you reuse daily. Pinned items are never auto-deleted.</p></div>
+        <div class="feat reveal"><div class="ico">🔒</div><h3>Private by design</h3><p>Your history is saved only on your own PC. No account, no cloud, no tracking.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section id="how">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Up and running in a minute</h2>
+        <p class="sub">Three simple steps. You only set it up once.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="num">1</div><h3>Download</h3><p>Grab the zip with the button above and unzip it anywhere.</p></div>
+        <div class="step reveal"><div class="num">2</div><h3>Install</h3><p>Double-click <code>install_shortcut.bat</code>. It adds ClipDock to your Desktop and Start menu.</p></div>
+        <div class="step reveal"><div class="num">3</div><h3>Copy &amp; click</h3><p>Copy as usual with Ctrl+C. Click an item in ClipDock to paste it at your cursor.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHANGELOG ================= -->
+  <section id="changelog">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow">What's new</span>
+        <h2>Always getting better</h2>
+        <p class="sub">Your feedback shapes every release. Here's what changed.</p>
+      </div>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow">Help</span>
+        <h2>Quick answers</h2>
+      </div>
+      <div class="faq">
+        <details class="reveal"><summary>Do I need Python?</summary><p>Yes, a free one-time install from python.org (tick “Add python.exe to PATH”). ClipDock runs as a lightweight script through Python, so there's nothing else to install.</p></details>
+        <details class="reveal"><summary>Windows says a file is blocked (Smart App Control)</summary><p>Smart App Control blocks unsigned <code>.exe</code> programs. ClipDock isn't an .exe. It runs through Python, so it isn't affected. Use <code>install_shortcut.bat</code> from the zip rather than any .exe file.</p></details>
+        <details class="reveal"><summary>How do I update to the newest version?</summary><p>Download the latest zip from this page and run <code>install_shortcut.bat</code> again. It replaces the old files and keeps your clipboard history. ClipDock also checks for updates by itself. When one is ready, a small <b>Update ↗</b> note appears in its header.</p></details>
+        <details class="reveal"><summary>Is my clipboard data private?</summary><p>Completely. Your history is stored only on your own computer and is never uploaded anywhere. Copied passwords would be saved in the history too, so use the pause button (●) when copying sensitive things.</p></details>
+        <details class="reveal"><summary>It pasted nothing in my admin / elevated app</summary><p>Windows stops normal programs from sending keystrokes to apps running as administrator. Start ClipDock as administrator too, and it will work there.</p></details>
+        <details class="reveal"><summary>How do I uninstall it?</summary><p>Delete the ClipDock shortcut and the folder <code>%LOCALAPPDATA%\ClipDock</code>. Your history file lives in <code>%APPDATA%\ClipDock</code>; delete that too if you want everything gone.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <div class="wrap">
+    <div class="band reveal">
+      <h2>Ready to never lose a copy again?</h2>
+      <p class="sub">Free · No sign-up · Version <b>v<span class="ver">1.0.0</span></b></p>
+      <div class="cta">
+        <a class="btn btn-primary" data-download href="downloads/ClipDock-latest.zip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+          Download ClipDock
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© ClipDock · Made with care for people who copy a lot</span>
+    <span>v<span class="ver">1.0.0</span> · <span class="size"></span></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <div class="tick">✓</div>
+  <p><b>Download started!</b>Unzip it, then double-click <code>install_shortcut.bat</code>.</p>
+  <button id="toast-close" aria-label="Close" style="background:none;border:0;color:#9aa0b0;font-size:1.3rem;cursor:pointer">×</button>
+</div>
+
+<script src="version.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
