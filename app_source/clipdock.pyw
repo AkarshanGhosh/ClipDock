@@ -119,7 +119,7 @@ MIN_W, MIN_H = 300, 260
 EDGE, CORNER = 6, 12          # resize grab zones (pixels)
 MAX_ITEMS, MAX_CHARS, MAX_NAME = 200, 50000, 60
 
-VERSION = "1.1.1"  # release.py keeps this in sync with the website
+VERSION = "1.1.0"  # release.py keeps this in sync with the website
 # Set once after you host the website, e.g. "https://yourname.github.io/clipdock/version.json"
 UPDATE_URL = ""
 
