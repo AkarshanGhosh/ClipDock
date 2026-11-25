@@ -45,9 +45,12 @@ No account. No cloud. No tracking. Just your clipboard, with a memory.
 | | Feature | What it does |
 |---|---|---|
 | 🖱️ | **Click to paste** | Click an item and it lands at your cursor, in any app. |
-| 📌 | **Docked above the taskbar** | Always on top and always in reach. Drag it anywhere, or collapse it to a slim bar. |
+| 📌 | **Docked above the taskbar** | Always on top and always in reach, or collapse it to a slim bar. |
 | 🎯 | **Never steals focus** | Your text cursor stays exactly where you left it while you click around ClipDock. |
-| 🔍 | **Instant search** | Type a few letters to find something you copied an hour ago. |
+| ↔️ | **Move & resize freely** | Drag from *anywhere* to move it, and drag any edge or corner to resize. Size and position are remembered. |
+| 🏷️ | **Name your clips** | Give any item a name like “Work email”, then find it by that name. |
+| 🔍 | **Instant search** | Search by what you copied **or** by the name you gave it. |
+| 🌗 | **Day & night mode** | One click switches between a light and a dark look, and ClipDock remembers it. |
 | ⭐ | **Pin favourites** | Star snippets you reuse daily. Pinned items are never auto-deleted. |
 | 💡 | **Hover hints** | Hover any button to see what it does. |
 | 🔄 | **Update check** | A small `Update v1.x.x ↗` note appears when a new version is out. |
@@ -80,6 +83,20 @@ Get the latest version from the website: **https://YOUR-SITE-ADDRESS** (the *Dow
 
 > 💡 Right-click the ClipDock shortcut → **Pin to taskbar** for one-click launching.
 
+### 🎮 Quick controls
+
+| I want to… | Do this |
+|---|---|
+| **Paste** an item | Click it. It pastes where your text cursor is. |
+| **Move** the window | Drag from any empty spot, or press-and-drag an item. |
+| **Resize** the window | Drag any edge or corner. The minimum size is 300 × 260. |
+| **Name** an item | Click the pencil ✎, type a name, press **Enter** (**Esc** cancels). |
+| **Find** an item | Click the search box and type part of its text or its name. |
+| **Pin** an item | Click the star ☆. Pinned items live under the *Pinned* tab. |
+| **Switch day / night** | Click the ☀ / ☾ button in the header. |
+| **Pause** capturing | Click the ● button (for example, when copying a password). |
+| **Collapse** to a slim bar | Click the — button. |
+
 <a id="updating"></a>
 
 ## 🔄 Updating
@@ -97,7 +114,8 @@ ready, an **Update ↗** note appears in its header and clicking it opens the do
 | **Windows says a file is blocked** (Smart App Control) | Smart App Control blocks unsigned `.exe` files. ClipDock is **not** an .exe; it runs through Python, so use `install_shortcut.bat` from the zip. |
 | **“Python was not found”** | Install Python from python.org and tick *Add python.exe to PATH*, then run the installer again. |
 | **Nothing pastes in an admin / elevated app** | Windows blocks normal programs from typing into admin windows. Start ClipDock as administrator too. |
-| **I copied a password** | History is stored in plain text on your PC. Press the **●** pause button before copying sensitive things, or use **Clear history**. |
+| **I copied a password** | History (including item names) is stored in plain text on your PC. Press the **●** pause button before copying sensitive things, or use **Clear history**. |
+| **The window is off-screen or the wrong size** | Close ClipDock and delete `%APPDATA%\ClipDock\settings.json`. It will reopen above the taskbar at the default size. |
 | **Shortcut wasn't created** | The installer prints 4 manual steps. It takes about 30 seconds. |
 | **How do I uninstall?** | Delete the ClipDock shortcut and the folder `%LOCALAPPDATA%\ClipDock`. Delete `%APPDATA%\ClipDock` too to remove your history. |
 

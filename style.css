@@ -96,6 +96,7 @@ h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.04; letter-spacing:
 .dk-tabs .on { background: var(--accent); color: #fff; }
 .dk-card { padding: 10px 12px; margin-bottom: 7px; border-radius: 10px; background: #262932; font-size: 0.82rem; color: #dfe2ec; cursor: default; transition: background 0.25s, transform 0.25s, box-shadow 0.25s; }
 .dk-card small { display: block; color: var(--muted); font-size: 0.68rem; margin-top: 2px; }
+.dk-name { display: block; color: var(--accent); font-weight: 600; font-size: 0.74rem; margin-bottom: 1px; }
 .dk-card.active { background: #353a4a; transform: scale(1.03); box-shadow: 0 0 0 1.5px var(--accent), 0 8px 24px rgba(79, 140, 255, 0.35); }
 
 /* ---------- sections ---------- */

@@ -10,6 +10,11 @@ INSTALL (30 seconds)
 HOW TO USE
   - Copy anything (Ctrl+C) - it appears in ClipDock.
   - Click an item to paste it at your cursor, in any app.
+  - MOVE: drag the window from any empty spot (or drag an item).
+  - RESIZE: drag any edge or corner. Size and position are remembered.
+  - NAME: click the pencil on an item, type a name, press Enter.
+    Search then finds items by their text OR their name.
+  - DAY / NIGHT: click the sun/moon button in the header.
   - Hover any button to see what it does.
 
 UPDATE
