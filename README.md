@@ -77,8 +77,8 @@ Get the latest version from the website: **https://YOUR-SITE-ADDRESS** (the *Dow
   <img src="docs/how-it-works.jpg" alt="Three install steps" width="820">
 </div>
 
-1. **Install Python** (free, one time) from [python.org](https://www.python.org/downloads/), and tick **“Add python.exe to PATH”**.
-2. **Unzip** the download and double-click **`install_shortcut.bat`**.
+1. **Unzip** the download and double-click **`install_shortcut.bat`**.
+2. If Python is not installed, the installer downloads and installs it automatically through Windows Package Manager (`winget`), with an official Python installer fallback.
 3. **Open ClipDock** from your Desktop or Start menu. Copy as usual with `Ctrl + C`, then click an item to paste it.
 
 > 💡 Right-click the ClipDock shortcut → **Pin to taskbar** for one-click launching.
@@ -101,8 +101,10 @@ Get the latest version from the website: **https://YOUR-SITE-ADDRESS** (the *Dow
 
 ## 🔄 Updating
 
-Download the newest zip, unzip it, and run **`install_shortcut.bat`** again. It replaces the old
-files and **keeps your clipboard history**. ClipDock also checks for updates by itself; when one is
+Download the newest zip, unzip it, and run **`install_shortcut.bat`** again. The installer closes any
+running ClipDock instance, removes the previous program files, and installs the latest version.
+Your clipboard history and settings are stored separately and **are kept**. If Python is missing,
+the installer downloads and installs it automatically. ClipDock also checks for updates by itself; when one is
 ready, an **Update ↗** note appears in its header and clicking it opens the download page.
 
 <a id="troubleshooting"></a>
@@ -112,7 +114,7 @@ ready, an **Update ↗** note appears in its header and clicking it opens the do
 | Problem | Fix |
 |---|---|
 | **Windows says a file is blocked** (Smart App Control) | Smart App Control blocks unsigned `.exe` files. ClipDock is **not** an .exe; it runs through Python, so use `install_shortcut.bat` from the zip. |
-| **“Python was not found”** | Install Python from python.org and tick *Add python.exe to PATH*, then run the installer again. |
+| **Python is missing** | Run `install_shortcut.bat`; it attempts installation through `winget` and then downloads the official Python installer if needed. |
 | **Nothing pastes in an admin / elevated app** | Windows blocks normal programs from typing into admin windows. Start ClipDock as administrator too. |
 | **I copied a password** | History (including item names) is stored in plain text on your PC. Press the **●** pause button before copying sensitive things, or use **Clear history**. |
 | **The window is off-screen or the wrong size** | Close ClipDock and delete `%APPDATA%\ClipDock\settings.json`. It will reopen above the taskbar at the default size. |
@@ -158,7 +160,7 @@ ClipDock/
 3. Commit and push to GitHub, including the new `.zip` files in `downloads/`.
 
 ```bash
-python release.py 1.1.0 -n "Added dark mode" -n "Fixed a paste bug"
+python release.py 1.1.2 -n "Installer replaces previous version and installs Python when missing" -n "Fixed a paste bug"
 ```
 
 | `release.py` does | Result |

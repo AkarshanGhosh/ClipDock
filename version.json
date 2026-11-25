@@ -1,7 +1,15 @@
 {
   "app": "ClipDock",
-  "latest": "1.1.1",
+  "latest": "1.1.2",
   "releases": [
+    {
+      "version": "1.1.2",
+      "date": "2026-11-25",
+      "notes": [
+        "Installer closes any running ClipDock instance and replaces the previous program files with the latest version while preserving clipboard history and settings.",
+        "If Python is not installed, the installer downloads and installs it through Windows Package Manager, with an official Python installer fallback."
+      ]
+    },
     {
       "version": "1.1.1",
       "date": "2026-11-25",
@@ -33,7 +41,7 @@
     }
   ],
   "released": "2026-11-25",
-  "size_bytes": 40101,
-  "sha256": "de13a8d480ad72b072f52ebe784de57792606de188d12a14d9a7d04f40b10b44",
+  "size_bytes": 40830,
+  "sha256": "766d128e2007b24ae76dd19014c0c5924e7859493794824deda75b02c7e411ab",
   "download": "downloads/ClipDock-latest.zip"
 }
