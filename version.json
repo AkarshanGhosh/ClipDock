@@ -1,23 +1,16 @@
 {
   "app": "ClipDock",
-  "latest": "1.1.2",
+  "latest": "1.1.1",
   "releases": [
     {
-      "version": "1.1.2",
-      "date": "2026-11-25",
-      "notes": [
-        "Installer closes any running ClipDock instance and replaces the previous program files with the latest version while preserving clipboard history and settings.",
-        "If Python is not installed, the installer downloads and installs it through Windows Package Manager, with an official Python installer fallback."
-      ]
-    },
-    {
       "version": "1.1.1",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "notes": [
-        "Move from anywhere: Drag from any empty spot, including the list background, tabs and footer, or press-and-drag an item. A plain click still pastes, and it only counts as a drag after the mouse moves about 6 pixels.",
-        "Resize: Drag any edge or corner, and the cursor changes to show it. The minimum size is 300 × 260. Item text re-wraps as the window gets wider or narrower. The window's size, position and theme are saved and restored on the next launch.",
-        "Name your clips: Click the pencil ✎ on an item, type a name such as \"Work email\", then press Enter (Esc cancels). The name shows above the text, and search matches text or names. Names stay when you copy the same text again.",
-        "Day/night mode: Click the ☀ / ☾ button in the header. It switches the whole window and is remembered."
+        "Installer installs Python automatically if it is missing",
+        "Installer removes the previous ClipDock, then installs the latest (history is kept)",
+        "New one-file online installer: ClipDock-Setup.bat",
+        "Added uninstall_clipdock.bat",
+        "Update check works out of the box"
       ]
     },
     {
@@ -40,8 +33,11 @@
       ]
     }
   ],
-  "released": "2026-11-25",
-  "size_bytes": 40830,
-  "sha256": "766d128e2007b24ae76dd19014c0c5924e7859493794824deda75b02c7e411ab",
-  "download": "downloads/ClipDock-latest.zip"
+  "released": "2026-11-26",
+  "size_bytes": 42847,
+  "sha256": "f44db41e569d630e8dbd8d34278724e5b943e87a5c003bfba1d9bb87e31b742c",
+  "download": "downloads/ClipDock-latest.zip",
+  "setup": "downloads/ClipDock-Setup.bat",
+  "site_url": "",
+  "repo": "AkarshanGhosh/ClipDock"
 }

@@ -100,9 +100,10 @@
       </div>
       <div class="steps">
         <div class="step reveal"><div class="num">1</div><h3>Download</h3><p>Grab the zip with the button above and unzip it anywhere.</p></div>
-        <div class="step reveal"><div class="num">2</div><h3>Install</h3><p>Double-click <code>install_shortcut.bat</code>. It adds ClipDock to your Desktop and Start menu.</p></div>
+        <div class="step reveal"><div class="num">2</div><h3>Install</h3><p>Double-click <code>install_shortcut.bat</code>. It sets up Python if you need it, replaces any older version and adds ClipDock to your Desktop and Start menu.</p></div>
         <div class="step reveal"><div class="num">3</div><h3>Copy &amp; click</h3><p>Copy as usual with Ctrl+C. Click an item in ClipDock to paste it at your cursor.</p></div>
       </div>
+      <p class="alt-dl reveal">Prefer a single file? <a href="downloads/ClipDock-Setup.bat" download>Download <b>ClipDock-Setup.bat</b></a>. It downloads the latest ClipDock and installs everything, Python included.</p>
     </div>
   </section>
 
@@ -126,14 +127,15 @@
         <h2>Quick answers</h2>
       </div>
       <div class="faq">
-        <details class="reveal"><summary>Do I need Python?</summary><p>Yes, a free one-time install from python.org (tick “Add python.exe to PATH”). ClipDock runs as a lightweight script through Python, so there's nothing else to install.</p></details>
+        <details class="reveal"><summary>Do I need to install Python first?</summary><p>No. <code>install_shortcut.bat</code> checks for Python and, if it is missing, downloads and installs it for you (one time, about 1–2 minutes, no administrator needed). Python is the free, official one from python.org.</p></details>
         <details class="reveal"><summary>Windows says a file is blocked (Smart App Control)</summary><p>Smart App Control blocks unsigned <code>.exe</code> programs. ClipDock isn't an .exe. It runs through Python, so it isn't affected. Use <code>install_shortcut.bat</code> from the zip rather than any .exe file.</p></details>
-        <details class="reveal"><summary>How do I update to the newest version?</summary><p>Download the latest zip from this page and run <code>install_shortcut.bat</code> again. It replaces the old files and keeps your clipboard history. ClipDock also checks for updates by itself. When one is ready, a small <b>Update ↗</b> note appears in its header.</p></details>
+        <details class="reveal"><summary>How do I update to the newest version?</summary><p>Download the latest zip from this page and run <code>install_shortcut.bat</code> again. It removes the old version, installs the new one and keeps your clipboard history. You can also run <code>ClipDock-Setup.bat</code>. ClipDock checks for updates by itself too: when one is ready, an <b>Update ↗</b> note appears in its header.</p></details>
         <details class="reveal"><summary>How do I name an item and find it later?</summary><p>Click the pencil ✎ on any item, type a name (for example “Work email”) and press Enter. The name shows above the text, and the search box finds items by their text <b>or</b> their name.</p></details>
         <details class="reveal"><summary>Can I move or resize the window?</summary><p>Yes. Drag it from any empty spot (or drag an item) to move it, and drag any edge or corner to resize it. ClipDock remembers its size, position and day/night mode next time.</p></details>
         <details class="reveal"><summary>Is my clipboard data private?</summary><p>Completely. Your history is stored only on your own computer and is never uploaded anywhere. Copied passwords would be saved in the history too, so use the pause button (●) when copying sensitive things.</p></details>
+        <details class="reveal"><summary>Windows says “Windows protected your PC”</summary><p>That is SmartScreen, which warns about any downloaded file it hasn’t seen often. Click <b>More info</b> → <b>Run anyway</b>. The installers are plain text <code>.bat</code> files you can open and read.</p></details>
         <details class="reveal"><summary>It pasted nothing in my admin / elevated app</summary><p>Windows stops normal programs from sending keystrokes to apps running as administrator. Start ClipDock as administrator too, and it will work there.</p></details>
-        <details class="reveal"><summary>How do I uninstall it?</summary><p>Delete the ClipDock shortcut and the folder <code>%LOCALAPPDATA%\ClipDock</code>. Your history file lives in <code>%APPDATA%\ClipDock</code>; delete that too if you want everything gone.</p></details>
+        <details class="reveal"><summary>How do I uninstall it?</summary><p>Run <code>uninstall_clipdock.bat</code> (it is in the zip and in <code>%LOCALAPPDATA%\ClipDock</code>). It removes the app and shortcuts and asks whether to delete your history as well.</p></details>
       </div>
     </div>
   </section>

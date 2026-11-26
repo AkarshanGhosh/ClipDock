@@ -71,15 +71,20 @@ Get the latest version from the website: **https://YOUR-SITE-ADDRESS** (the *Dow
 
 <a id="install"></a>
 
-## ⚡ Install in 30 seconds
+## ⚡ Install in about a minute
 
 <div align="center">
   <img src="docs/how-it-works.jpg" alt="Three install steps" width="820">
 </div>
 
-1. **Unzip** the download and double-click **`install_shortcut.bat`**.
-2. If Python is not installed, the installer downloads and installs it automatically through Windows Package Manager (`winget`), with an official Python installer fallback.
-3. **Open ClipDock** from your Desktop or Start menu. Copy as usual with `Ctrl + C`, then click an item to paste it.
+1. **Unzip** the download (right-click → *Extract All*).
+2. Double-click **`install_shortcut.bat`**. It does everything for you:
+   - 🐍 **No Python? It installs it** (the official one, downloaded through the terminal window, about 1–2 minutes, no admin rights needed).
+   - ♻️ **Already have ClipDock? It removes the old version first** and installs the latest in its place. Your history and settings are kept.
+   - 🔗 Adds **ClipDock** to your Desktop and Start menu and starts it.
+3. **Copy** as usual with `Ctrl + C`, then **click an item** to paste it at your cursor.
+
+> **Prefer a single file?** Download [`ClipDock-Setup.bat`](downloads/ClipDock-Setup.bat). It fetches the latest ClipDock and runs the same installer (Python included).
 
 > 💡 Right-click the ClipDock shortcut → **Pin to taskbar** for one-click launching.
 
@@ -101,11 +106,12 @@ Get the latest version from the website: **https://YOUR-SITE-ADDRESS** (the *Dow
 
 ## 🔄 Updating
 
-Download the newest zip, unzip it, and run **`install_shortcut.bat`** again. The installer closes any
-running ClipDock instance, removes the previous program files, and installs the latest version.
-Your clipboard history and settings are stored separately and **are kept**. If Python is missing,
-the installer downloads and installs it automatically. ClipDock also checks for updates by itself; when one is
-ready, an **Update ↗** note appears in its header and clicking it opens the download page.
+Run **`install_shortcut.bat`** from the newest zip (or **`ClipDock-Setup.bat`**) again. It **uninstalls the previous
+version and installs the latest**, and your clipboard history is kept. ClipDock also checks for updates by itself;
+when one is ready, an **Update ↗** note appears in its header and clicking it opens the download page.
+
+**Uninstall:** run `uninstall_clipdock.bat` (it is in the zip and in `%LOCALAPPDATA%\ClipDock`). It asks whether to
+delete your history too.
 
 <a id="troubleshooting"></a>
 
@@ -114,12 +120,13 @@ ready, an **Update ↗** note appears in its header and clicking it opens the do
 | Problem | Fix |
 |---|---|
 | **Windows says a file is blocked** (Smart App Control) | Smart App Control blocks unsigned `.exe` files. ClipDock is **not** an .exe; it runs through Python, so use `install_shortcut.bat` from the zip. |
-| **Python is missing** | Run `install_shortcut.bat`; it attempts installation through `winget` and then downloads the official Python installer if needed. |
+| **“Could not install Python automatically”** | You may be offline or a policy blocked the download. Install Python from [python.org](https://www.python.org/downloads/) (tick *Add python.exe to PATH*) and run the installer again. |
+| **“Windows protected your PC”** | That is SmartScreen warning about any downloaded file. Click **More info → Run anyway**. The installers are plain-text `.bat` files you can read. |
 | **Nothing pastes in an admin / elevated app** | Windows blocks normal programs from typing into admin windows. Start ClipDock as administrator too. |
 | **I copied a password** | History (including item names) is stored in plain text on your PC. Press the **●** pause button before copying sensitive things, or use **Clear history**. |
 | **The window is off-screen or the wrong size** | Close ClipDock and delete `%APPDATA%\ClipDock\settings.json`. It will reopen above the taskbar at the default size. |
 | **Shortcut wasn't created** | The installer prints 4 manual steps. It takes about 30 seconds. |
-| **How do I uninstall?** | Delete the ClipDock shortcut and the folder `%LOCALAPPDATA%\ClipDock`. Delete `%APPDATA%\ClipDock` too to remove your history. |
+| **How do I uninstall?** | Run `uninstall_clipdock.bat`. It removes the app and shortcuts, then asks whether to delete your history. |
 
 <div align="center">
   <img src="docs/mobile.png" alt="ClipDock website on mobile" width="260">
@@ -142,12 +149,15 @@ ClipDock/
 ├── version.json · version.js          current version + changelog (written by release.py)
 ├── downloads/
 │   ├── ClipDock-latest.zip            ← the Download button always points here
+│   ├── ClipDock-Setup.bat             ← one-file online installer (built by release.py)
 │   └── ClipDock-v1.0.0.zip            ← every past version is kept
 ├── app_source/                        ← edit the app HERE
 │   ├── clipdock.pyw                   the app (Python + Tkinter, no extra packages)
 │   ├── clipdock.ico                   app icon
-│   ├── install_shortcut.bat           installer users run
+│   ├── install_shortcut.bat           installer: adds Python if missing, replaces old versions
+│   ├── uninstall_clipdock.bat         uninstaller (offers to delete history)
 │   └── README.txt                     shipped inside the zip
+├── tools/                             template for ClipDock-Setup.bat
 ├── docs/                              images used by this README
 ├── release.py · release.bat           publish a new version
 └── README.md
@@ -160,7 +170,7 @@ ClipDock/
 3. Commit and push to GitHub, including the new `.zip` files in `downloads/`.
 
 ```bash
-python release.py 1.1.2 -n "Installer replaces previous version and installs Python when missing" -n "Fixed a paste bug"
+python release.py 1.1.0 -n "Added dark mode" -n "Fixed a paste bug"
 ```
 
 | `release.py` does | Result |
@@ -169,6 +179,7 @@ python release.py 1.1.2 -n "Installer replaces previous version and installs Pyt
 | Zips `app_source/` → `downloads/ClipDock-v1.1.0.zip` | A permanent copy of every release |
 | Copies it to `downloads/ClipDock-latest.zip` | The website's Download button gets the new file |
 | Rewrites `version.json` and `version.js` | Website version, size, date and changelog update automatically |
+| Rebuilds `downloads/ClipDock-Setup.bat` | The one-file installer always fetches the newest zip |
 
 ## ☁️ Deploy on Cloudflare (free)
 
@@ -205,16 +216,19 @@ Create this file next to `index.html`. The `name` must match the project name in
 Other free hosts also work: **GitHub Pages** (Settings → Pages → deploy from `main`) and
 **Netlify Drop** (drag the folder in).
 
-## 🔔 Turn on the in-app update check
+## 🔔 The in-app update check
 
-After the site is live, open `app_source/clipdock.pyw` and set this once:
+It works out of the box: ClipDock reads `version.json` from this GitHub repo (`main` branch) and, when a newer
+version exists, shows **Update v1.x.x ↗** in its header. Clicking it opens the download page.
 
-```python
-UPDATE_URL = "https://YOUR-SITE-ADDRESS/version.json"
+To point it at your **website** instead, pass the address once. It is remembered for later releases:
+
+```bash
+python release.py 1.1.2 --site-url https://YOUR-SITE-ADDRESS -n "What changed"
 ```
 
-Run `release.bat` again to ship it. ClipDock then checks on startup and when the user clicks the
-**↻** button, and shows **Update v1.x.x ↗** when a newer version exists.
+That stamps the website address into the app and into `ClipDock-Setup.bat` (which tries your site first and
+falls back to GitHub).
 
 ## 👀 Preview locally
 

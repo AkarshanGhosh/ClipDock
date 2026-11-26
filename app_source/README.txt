@@ -1,11 +1,12 @@
 ClipDock - clipboard history that pastes where your cursor is
 ==============================================================
 
-INSTALL (30 seconds)
-  1. Double-click  install_shortcut.bat
-  2. If Python is missing, the installer downloads and installs it automatically
-     using Windows Package Manager (winget), with an official Python installer
-     fallback.
+INSTALL (about 1 minute)
+  1. Unzip the whole download (right-click > Extract All).
+  2. Double-click  install_shortcut.bat
+     - If you don't have Python, it is downloaded and installed for you.
+     - If an older ClipDock is installed, it is removed first and the latest
+       version is installed in its place (your history and settings are kept).
   3. Done! Open "ClipDock" from your Desktop or Start menu.
 
 HOW TO USE
@@ -19,9 +20,16 @@ HOW TO USE
   - Hover any button to see what it does.
 
 UPDATE
-  Download the newest zip from the website, unzip, and run install_shortcut.bat
-  again. The installer closes the old app, replaces its program files, and
-  installs the latest version. Your history and settings are kept.
+  Download the newest zip and run install_shortcut.bat again. It replaces the
+  old version and keeps your history. (ClipDock also tells you when an update
+  is available: look for "Update v1.x.x" in its header.)
 
-Windows blocked it? Smart App Control blocks unsigned .exe files. ClipDock runs
+UNINSTALL
+  Run uninstall_clipdock.bat (also saved in %LOCALAPPDATA%\ClipDock).
+  It asks whether to delete your history too.
+
+Windows shows "Windows protected your PC" (SmartScreen)?
+  Click "More info" > "Run anyway". The installer is a plain text .bat file.
+
+Smart App Control blocks unsigned .exe files. ClipDock is not an .exe: it runs
 as a script through Python, so it is not affected.

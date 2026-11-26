@@ -122,6 +122,9 @@ h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); letter-spacing: -0.03em; line-heig
 .step p { color: var(--muted); font-size: 0.95rem; }
 code { background: rgba(255, 255, 255, 0.09); padding: 2px 7px; border-radius: 6px; font-size: 0.88em; font-family: "Cascadia Mono", Consolas, monospace; }
 
+.alt-dl { text-align: center; color: var(--muted); margin-top: 34px; font-size: 0.95rem; }
+.alt-dl a { color: var(--accent); border-bottom: 1px dashed rgba(79,140,255,.6); }
+.alt-dl a:hover { color: #fff; }
 .log { max-width: 760px; margin: 44px auto 0; }
 .rel { position: relative; padding: 0 0 30px 34px; border-left: 2px solid var(--line); margin-left: 8px; }
 .rel::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--line); border: 2px solid var(--bg); }

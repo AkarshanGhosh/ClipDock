@@ -4,6 +4,7 @@ ClipDock release tool
 Edit the app in  app_source/  then publish a new version with ONE command:
 
     python release.py 1.1.0 -n "Added dark mode" -n "Fixed a paste bug"
+    python release.py 1.1.0 -n "..." --site-url https://your-site.workers.dev   (remembered after the first time)
 
 or just run it with no arguments (or double-click release.bat) and answer the questions.
 
@@ -12,6 +13,8 @@ What it does
   2. zips app_source/ into downloads/ClipDock-v<version>.zip
   3. copies it to downloads/ClipDock-latest.zip   <- the website's Download button
   4. updates version.json (used by the app's update check) and version.js (used by the website)
+  5. builds downloads/ClipDock-Setup.bat, a one-file online installer that downloads the latest
+     zip (from your site, falling back to GitHub) and installs it, Python included
 Then upload the folder to your host again and everyone gets the new version.
 """
 import argparse
@@ -30,6 +33,9 @@ DOWNLOADS = os.path.join(ROOT, "downloads")
 VERSION_JSON = os.path.join(ROOT, "version.json")
 VERSION_JS = os.path.join(ROOT, "version.js")
 APP_FILE = os.path.join(SRC, "clipdock.pyw")
+SETUP_TEMPLATE = os.path.join(ROOT, "tools", "ClipDock-Setup.template.bat")
+SETUP_OUT = os.path.join(DOWNLOADS, "ClipDock-Setup.bat")
+DEFAULT_REPO = "AkarshanGhosh/ClipDock"
 EXCLUDE = {"__pycache__", "make_icon.py", ".DS_Store", "Thumbs.db"}
 SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 
@@ -49,6 +55,37 @@ def stamp_version(version):
         sys.exit("Could not find a VERSION = \"...\" line in app_source/clipdock.pyw")
     with open(APP_FILE, "w", encoding="utf-8", newline="") as f:
         f.write(new)
+
+
+def stamp_urls(site_url, repo):
+    """Point the app's update check at the website (or GitHub if no website address is known)."""
+    with open(APP_FILE, "r", encoding="utf-8") as f:
+        src = f.read()
+    if site_url:
+        update, site = site_url + "/version.json", site_url + "/"
+    else:
+        update = f"https://raw.githubusercontent.com/{repo}/main/version.json"
+        site = f"https://github.com/{repo}"
+    src = re.sub(r'^UPDATE_URL\s*=\s*".*"', f'UPDATE_URL = "{update}"', src, count=1, flags=re.M)
+    src = re.sub(r'^SITE_URL\s*=\s*".*"', f'SITE_URL = "{site}"', src, count=1, flags=re.M)
+    with open(APP_FILE, "w", encoding="utf-8", newline="") as f:
+        f.write(src)
+
+
+def build_setup(site_url, repo):
+    """One-file online installer: tries the website first, then the GitHub copy."""
+    if not os.path.exists(SETUP_TEMPLATE):
+        return False
+    urls = []
+    if site_url:
+        urls.append(f'"{site_url}/downloads/ClipDock-latest.zip"')
+    urls.append(f'"https://raw.githubusercontent.com/{repo}/main/downloads/ClipDock-latest.zip"')
+    with open(SETUP_TEMPLATE, "r", encoding="utf-8") as f:
+        text = f.read().replace("__URLS__", " ".join(urls))
+    os.makedirs(DOWNLOADS, exist_ok=True)
+    with open(SETUP_OUT, "w", encoding="utf-8", newline="") as f:
+        f.write(text.replace("\r\n", "\n").replace("\n", "\r\n"))
+    return True
 
 
 def build_zip(version):
@@ -72,6 +109,8 @@ def main():
     ap = argparse.ArgumentParser(description="Publish a new ClipDock version")
     ap.add_argument("version", nargs="?", help="new version, e.g. 1.1.0")
     ap.add_argument("-n", "--note", action="append", default=[], help="changelog line (repeat for more)")
+    ap.add_argument("--site-url", help="your website address, e.g. https://clipdock.example.workers.dev (remembered)")
+    ap.add_argument("--repo", help="GitHub repo as owner/name (remembered)")
     args = ap.parse_args()
 
     state = load_state()
@@ -86,6 +125,8 @@ def main():
             if not line:
                 break
             notes.append(line)
+    site_url = (args.site_url if args.site_url is not None else state.get("site_url", "")).strip().rstrip("/")
+    repo = (args.repo or state.get("repo") or DEFAULT_REPO).strip().strip("/")
     if not SEMVER.match(version):
         sys.exit("Version must look like 1.2.3")
     if not os.path.exists(APP_FILE):
@@ -94,7 +135,9 @@ def main():
         notes = ["Improvements and fixes"]
 
     stamp_version(version)
+    stamp_urls(site_url, repo)
     _, size, sha = build_zip(version)
+    has_setup = build_setup(site_url, repo)
 
     today = datetime.date.today().isoformat()
     releases = [r for r in state.get("releases", []) if r.get("version") != version]
@@ -106,6 +149,9 @@ def main():
         "size_bytes": size,
         "sha256": sha,
         "download": "downloads/ClipDock-latest.zip",
+        "setup": "downloads/ClipDock-Setup.bat" if has_setup else "",
+        "site_url": site_url,
+        "repo": repo,
         "releases": releases,
     })
     with open(VERSION_JSON, "w", encoding="utf-8") as f:
@@ -116,6 +162,9 @@ def main():
     print(f"\nReleased ClipDock v{version}  ({size / 1024:.1f} KB)")
     print("  downloads/ClipDock-latest.zip  updated")
     print("  version.json / version.js      updated")
+    if has_setup:
+        print("  downloads/ClipDock-Setup.bat   rebuilt (one-file online installer)")
+    print(f"  app update check -> {'your website' if site_url else 'GitHub (' + repo + ')'}")
     print("Now upload this folder to your website host.")
 
 
