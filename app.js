@@ -110,6 +110,86 @@
     setInterval(cycle, 3600);
   }
 
+  // ---------- GitHub links, terminal commands, checksum ----------
+  var CFG = window.CLIPDOCK_CONFIG || {};
+  var repo = CFG.repo || R.repo || "AkarshanGhosh/ClipDock";
+  $$(".gh-releases").forEach(function (a) { a.href = "https://github.com/" + repo + "/releases"; });
+  $$(".gh-discuss").forEach(function (a) { a.href = "https://github.com/" + repo + "/discussions"; });
+  $$(".gh-issue").forEach(function (a) { a.href = "https://github.com/" + repo + "/issues/new"; });
+  var setupUrl = /^https?:/.test(location.protocol)
+    ? new URL("downloads/ClipDock-Setup.bat", location.href).href
+    : "https://raw.githubusercontent.com/" + repo + "/main/downloads/ClipDock-Setup.bat";
+  var cmdEl = $("#cmd-cmd"), psEl = $("#cmd-ps"), shaEl = $("#sha");
+  if (cmdEl) cmdEl.textContent = 'curl -L -o "%TEMP%\\ClipDock-Setup.bat" ' + setupUrl + ' && "%TEMP%\\ClipDock-Setup.bat"';
+  if (psEl) psEl.textContent = 'curl.exe -L -o "$env:TEMP\\ClipDock-Setup.bat" ' + setupUrl + '; & "$env:TEMP\\ClipDock-Setup.bat"';
+  if (shaEl) shaEl.textContent = R.sha256 || "(published with the next release)";
+  $$(".copy").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var target = $(b.getAttribute("data-copy"));
+      if (!target) return;
+      var text = target.textContent;
+      var done = function () { b.textContent = "Copied ✓"; b.classList.add("ok"); setTimeout(function () { b.textContent = "Copy"; b.classList.remove("ok"); }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+      function fallback() {
+        var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {} document.body.removeChild(ta);
+      }
+    });
+  });
+
+  // ---------- feedback form (Web3Forms when a key is set, otherwise a pre-filled GitHub issue) ----------
+  var form = $("#fb-form");
+  if (form) {
+    var type = "idea", sending = false;
+    var typeNames = { idea: "Idea", bug: "Problem", love: "Love it", question: "Question" };
+    var note = $("#fb-note"), send = $("#fb-send");
+    $$(".chip", form).forEach(function (c) {
+      c.addEventListener("click", function () {
+        $$(".chip", form).forEach(function (x) { x.classList.remove("on"); });
+        c.classList.add("on"); type = c.getAttribute("data-type");
+      });
+    });
+    function say(msg, bad) { note.textContent = msg; note.className = "fb-note" + (bad ? " bad" : ""); }
+    function lastSent() { try { return +localStorage.getItem("clipdock-fb") || 0; } catch (e) { return 0; } }
+    function markSent() { try { localStorage.setItem("clipdock-fb", String(Date.now())); } catch (e) {} }
+    $("#fb-again").addEventListener("click", function () {
+      $("#fb-done").hidden = true; form.classList.remove("sent"); $("#fb-msg").value = ""; say("");
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (sending) return;
+      var msg = $("#fb-msg").value.trim(), mail = $("#fb-mail").value.trim();
+      if ($("#fb-hp").value) return;                                   // bots fill the hidden field
+      if (msg.length < 5) { say("Please write a few words first.", true); $("#fb-msg").focus(); return; }
+      if (mail && !/^\S+@\S+\.\S+$/.test(mail)) { say("That e-mail doesn't look right.", true); return; }
+      if (Date.now() - lastSent() < 30000) { say("Thanks! Please wait a moment before sending another.", true); return; }
+      var subject = "ClipDock feedback: " + typeNames[type];
+      var body = msg + "\n\n— ClipDock v" + (R.latest || "?") + " · " + typeNames[type];
+      if (CFG.feedbackKey) {
+        sending = true; send.disabled = true; say("Sending…");
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ access_key: CFG.feedbackKey, subject: subject, from_name: "ClipDock website",
+            name: mail || "Anonymous", email: mail || undefined, message: body, type: typeNames[type], version: R.latest })
+        }).then(function (r) { return r.json(); }).then(function (j) {
+          if (!j.success) throw new Error(j.message || "failed");
+          markSent(); say(""); form.classList.add("sent"); $("#fb-done").hidden = false;
+        }).catch(function () { say("Couldn't send right now. Please try again in a moment.", true); })
+          .then(function () { sending = false; send.disabled = false; });
+      } else if (CFG.feedbackEmail) {
+        markSent(); location.href = "mailto:" + CFG.feedbackEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        say("Opening your e-mail app…");
+      } else {
+        markSent();
+        var q = "title=" + encodeURIComponent(typeNames[type] + ": ") + "&body=" + encodeURIComponent(body) +
+                "&labels=" + (type === "bug" ? "bug" : "enhancement");
+        window.open("https://github.com/" + repo + "/issues/new?" + q, "_blank", "noopener");
+        say("Opened a pre-filled GitHub issue (a free GitHub account is needed to post it).");
+      }
+    });
+  }
+
   // ---------- download toast ----------
   var toast = $("#toast"), tt;
   $$("[data-download]").forEach(function (a) {

@@ -13,7 +13,9 @@ What it does
   2. zips app_source/ into downloads/ClipDock-v<version>.zip
   3. copies it to downloads/ClipDock-latest.zip   <- the website's Download button
   4. updates version.json (used by the app's update check) and version.js (used by the website)
-  5. builds downloads/ClipDock-Setup.bat, a one-file online installer that downloads the latest
+  5. stamps the release notes into the app (shown in its "What's new" page after an update)
+  6. writes downloads/checksums.txt (SHA-256 of every download, also shown on the website)
+  7. builds downloads/ClipDock-Setup.bat, a one-file online installer that downloads the latest
      zip (from your site, falling back to GitHub) and installs it, Python included
 Then upload the folder to your host again and everyone gets the new version.
 """
@@ -55,6 +57,30 @@ def stamp_version(version):
         sys.exit("Could not find a VERSION = \"...\" line in app_source/clipdock.pyw")
     with open(APP_FILE, "w", encoding="utf-8", newline="") as f:
         f.write(new)
+
+
+def stamp_notes(notes, repo):
+    """Put this release's notes (and the GitHub repo) into the app so it can show 'What's new' offline."""
+    with open(APP_FILE, "r", encoding="utf-8") as f:
+        src = f.read()
+    block = "# <<WHATS_NEW>>\nWHATS_NEW = [\n" + "".join(f"    {json.dumps(n)},\n" for n in notes) + "]\n# <<END>>"
+    src, n = re.subn(r"# <<WHATS_NEW>>\n.*?# <<END>>", lambda m: block, src, count=1, flags=re.S)
+    if n == 0:
+        print("  (note: no WHATS_NEW markers found in clipdock.pyw - skipped)")
+    src = re.sub(r'^REPO\s*=\s*".*"', f'REPO = "{repo}"', src, count=1, flags=re.M)
+    with open(APP_FILE, "w", encoding="utf-8", newline="") as f:
+        f.write(src)
+
+
+def write_checksums(version):
+    lines = []
+    for name in (f"ClipDock-v{version}.zip", "ClipDock-latest.zip", "ClipDock-Setup.bat"):
+        path = os.path.join(DOWNLOADS, name)
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                lines.append(f"{hashlib.sha256(f.read()).hexdigest()}  {name}")
+    with open(os.path.join(DOWNLOADS, "checksums.txt"), "w", encoding="utf-8", newline="") as f:
+        f.write("\n".join(lines) + "\n")
 
 
 def stamp_urls(site_url, repo):
@@ -136,8 +162,10 @@ def main():
 
     stamp_version(version)
     stamp_urls(site_url, repo)
+    stamp_notes(notes, repo)
     _, size, sha = build_zip(version)
     has_setup = build_setup(site_url, repo)
+    write_checksums(version)
 
     today = datetime.date.today().isoformat()
     releases = [r for r in state.get("releases", []) if r.get("version") != version]
@@ -162,6 +190,7 @@ def main():
     print(f"\nReleased ClipDock v{version}  ({size / 1024:.1f} KB)")
     print("  downloads/ClipDock-latest.zip  updated")
     print("  version.json / version.js      updated")
+    print("  downloads/checksums.txt        written")
     if has_setup:
         print("  downloads/ClipDock-Setup.bat   rebuilt (one-file online installer)")
     print(f"  app update check -> {'your website' if site_url else 'GitHub (' + repo + ')'}")

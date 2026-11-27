@@ -1,7 +1,23 @@
 {
   "app": "ClipDock",
-  "latest": "1.1.1",
+  "latest": "1.2.0",
   "releases": [
+    {
+      "version": "1.2.0",
+      "date": "2026-11-27",
+      "notes": [
+        "Global hotkey (Ctrl+Alt+V) shows or hides ClipDock from any app",
+        "Keyboard mode: arrows + Enter, number keys 1-9, type to search, Esc to close",
+        "Right-click menu: paste as UPPER, lower, Title Case, one line; open links; pretty-print JSON",
+        "Paste stack: copy several things, then paste them back in order (Ctrl+Alt+N)",
+        "Smart badges for links, e-mails, JSON and colours; images and copied files are kept with thumbnails",
+        "Snippets with variables like {date} and {clipboard}, organised in folders",
+        "See which app each item came from and filter by app",
+        "Settings panel, tray icon, start with Windows, accent colour, opacity and text size",
+        "Export, import and OneDrive-style folder sync",
+        "Send feedback button, What's new after updates, one-click auto-update"
+      ]
+    },
     {
       "version": "1.1.1",
       "date": "2026-11-26",
@@ -33,9 +49,9 @@
       ]
     }
   ],
-  "released": "2026-11-26",
-  "size_bytes": 42847,
-  "sha256": "f44db41e569d630e8dbd8d34278724e5b943e87a5c003bfba1d9bb87e31b742c",
+  "released": "2026-11-27",
+  "size_bytes": 69463,
+  "sha256": "c4ee76b16820103fbf76a37359dd774c2d0d7e0d81e3eb3b1e41ab7b73f2df0e",
   "download": "downloads/ClipDock-latest.zip",
   "setup": "downloads/ClipDock-Setup.bat",
   "site_url": "",
